@@ -31,3 +31,17 @@
     transform: rotate(360deg);
   }
 }
+#map {
+  height: 50vh;
+  width: 50%;
+  padding: 1vh;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3vh;
+  
+}
+html, body {
+  height: 100%;
+  margin: 00;
+  padding: 0;
+}
