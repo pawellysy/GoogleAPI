@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { tsIndexSignature } from '@babel/types';
 import { __values } from 'tslib';
+import DatasetsTable from './components/DatasetsTable'
 
 
 function loadScript (url) {
@@ -22,10 +23,14 @@ function loadScript (url) {
     constructor(props){
       super(props); 
       this.state = {
+        position:{
         lat: 50.052453,
-        lng:  19.941800,
+        lng:  19.941800
+        },
         searchPlace: '',
-        data: []
+        data: [
+          {name: "Krakow", lat: 50.052453,lng:  19.941800}
+        ]
       }
     }
     
@@ -41,15 +46,45 @@ function loadScript (url) {
 
      initMap = () => {
      this.map = new window.google.maps.Map(document.getElementById('map'), {
-        center: {lat: this.state.lat, lng: this.state.lng},
+        center: {lat: this.state.position.lat, lng: this.state.position.lng},
         zoom: 13
        
       });
+
+      this.marker = new window.google.maps.Marker({
+        map: this.map,
+        position: this.state.position
+      });
+
+      var infoWindow = new window.google.maps.InfoWindow();
+      var infowindowContent = document.getElementById("infowindow")
+      infoWindow.setContent(infowindowContent)
+     
+
       
       this.autocomplete = new window.google.maps.places.Autocomplete( document.getElementById("pac-input"));
       this.autocomplete.addListener('place_changed', () => {
       var place = this.autocomplete.getPlace();
-      this.setState({searchPlace: place})
+      infoWindow.close();
+      this.marker.setVisible(false);
+      if (!place.geometry) {
+        // User entered the name of a Place that was not suggested and
+        // pressed the Enter key, or the Place Details request failed.
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+  
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+        this.map.fitBounds(place.geometry.viewport);
+      } else {
+        this.map.setCenter(place.geometry.location);
+        this.map.setZoom(17);  // Why 17? Because it looks good.
+      }
+      this.marker.setPosition(place.geometry.location);
+      this.marker.setVisible(true);
+      
+
       
       
 
@@ -80,10 +115,16 @@ function loadScript (url) {
       </div>
 
         <div id="map">  </div>
+        <div id="infowindow-content">
+  <img src="" width="16" height="16" id="place-icon"/>
+  <span id="place-name"  className="title"></span>
+  <span id="place-address"></span>
+</div>
 
         
 
         <div id="table">
+          <DatasetsTable dataset = {this.state.data}/>
           
 
         </div>        
