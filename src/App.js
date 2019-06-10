@@ -1,22 +1,25 @@
-  import React from 'react';
-  import './App.css';
-  import scriptLoader from 'react-async-script-loader'
-  
-  import Bar from './components/Bar'
-  import DatasetsTable from './components/DatasetsTable'
-  const MapStype = {
-    map: {
-      height: 100
+import React from 'react';
+import './App.css';
 
-    }
-  }
-    
-      
+
+function loadScript (url) {
+  var index = window.document.getElementsByTagName("script")[0]
+  var script = window.document.createElement("script")
+  script.src = url
+  script.async = true
+  script.defer = true
+  index.parentNode.insertBefore(script, index)
+  
+
+}
+
+
   
   class App extends React.Component {
 
     componentDidMount(){
       this.renderMap()
+      
     }
     
     state = {
@@ -33,11 +36,27 @@
 
 
      initMap = () => {
-     const map = new window.google.maps.Map(document.getElementById('map'), {
+     var map = new window.google.maps.Map(document.getElementById('map'), {
         center: {lat: this.state.lat, lng: this.state.lng},
         zoom: 13
+       
         
       });
+     
+    }
+
+    handleAutocomplete = () => {
+      let input = document.getElementById("pac-input");
+      var autocomplete = new window.google.maps.places.Autocomplete(input);
+      autocomplete.addListener('places_changed', () => {
+      var place = autocomplete.getPlace();
+      console.log(place);
+      
+
+      
+      
+      })
+      
     }
 
 
@@ -53,7 +72,7 @@
         <div>
           <p>Autocomplete search</p>
           <input id="pac-input" type="text"
-          placeholder="Enter a location"/>
+          placeholder="Enter a location" onChange={this.handleAutocomplete} />
       </div>
 
         <div id="map">  </div>
@@ -61,7 +80,7 @@
         
 
         <div id="table">
-          <DatasetsTable />
+          
 
 
         </div>
@@ -78,16 +97,6 @@
   // <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzwTEDiXGiyN6KgHMgQruqPvASqVAitUU&callback=initMap"
   //   async defer></script>
 
-  function loadScript (url) {
-    var index = window.document.getElementsByTagName("script")[0]
-    var script = window.document.createElement("script")
-    script.src = url
-    script.async = true
-    script.defer = true
-    index.parentNode.insertBefore(script, index)
-    
-
-  }
 
   export default App;
 
