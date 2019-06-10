@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import { tsIndexSignature } from '@babel/types';
+import { __values } from 'tslib';
 
 
 function loadScript (url) {
@@ -17,18 +19,20 @@ function loadScript (url) {
   
   class App extends React.Component {
 
+    constructor(props){
+      super(props); 
+      this.state = {
+        lat: 50.052453,
+        lng:  19.941800,
+        searchPlace: '',
+        data: []
+      }
+    }
+    
     componentDidMount(){
       this.renderMap()
       
     }
-    
-    state = {
-      lat: 50.052453,
-      lng:  19.941800,
-      searchPlace: '',
-      data: []
-    }
-
     renderMap = () => {
       loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyBzwTEDiXGiyN6KgHMgQruqPvASqVAitUU&libraries=places&callback=initMap")
       window.initMap = this.initMap
@@ -36,35 +40,35 @@ function loadScript (url) {
 
 
      initMap = () => {
-     var map = new window.google.maps.Map(document.getElementById('map'), {
+     this.map = new window.google.maps.Map(document.getElementById('map'), {
         center: {lat: this.state.lat, lng: this.state.lng},
         zoom: 13
        
-        
       });
-     
-    }
-
-    handleAutocomplete = () => {
-      let input = document.getElementById("pac-input");
-      var autocomplete = new window.google.maps.places.Autocomplete(input);
-      autocomplete.addListener('places_changed', () => {
-      var place = autocomplete.getPlace();
-      console.log(place);
+      
+      this.autocomplete = new window.google.maps.places.Autocomplete( document.getElementById("pac-input"));
+      this.autocomplete.addListener('place_changed', () => {
+      var place = this.autocomplete.getPlace();
+      this.setState({searchPlace: place})
+      
       
 
-      
-      
+
       })
       
+     
     }
-
+    
+        
+        
+    
 
    
-    
+
     render(){
-     
+     console.log(this.state.searchPlace)
     return (
+      
 
 
       <div className="App">
@@ -72,7 +76,7 @@ function loadScript (url) {
         <div>
           <p>Autocomplete search</p>
           <input id="pac-input" type="text"
-          placeholder="Enter a location" onChange={this.handleAutocomplete} />
+          placeholder="Enter a location"  />
       </div>
 
         <div id="map">  </div>
@@ -82,14 +86,7 @@ function loadScript (url) {
         <div id="table">
           
 
-
-        </div>
-
-
- 
-
-        
-        
+        </div>        
       </div>
     );
   }
