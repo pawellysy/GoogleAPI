@@ -3,15 +3,7 @@ import './App.css';
 import { tsIndexSignature } from '@babel/types';
 import { __values } from 'tslib'
 import DatasetsTable from './components/DatasetsTable'
-
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,9 +15,6 @@ const useStyles = makeStyles(theme => ({
     minWidth: 650,
   },
 }));
-
-
-
 
 function loadScript (url) {
   var index = window.document.getElementsByTagName("script")[0]
@@ -62,8 +51,8 @@ function loadScript (url) {
 
      initMap = () => {
      this.map = new window.google.maps.Map(document.getElementById('map'), {
-        center: {lat: 50, lng: 10},
-        zoom: 13
+        center: {lat: 50.0590158	, lng: 19.938079700000003},
+        zoom: 17
        
       });
 
@@ -75,6 +64,7 @@ function loadScript (url) {
       var infowindow = new window.google.maps.InfoWindow();
       var infowindowContent = document.getElementById("infowindow")
       infowindow.setContent(infowindowContent)
+      
      
 
       
@@ -109,11 +99,9 @@ function loadScript (url) {
       } else {
         this.map.setCenter(place.geometry.location);
         this.map.setZoom(17); 
-       
       }
       this.marker.setPosition(place.geometry.location);
       this.marker.setVisible(true);
-
       })
 
     }
@@ -125,12 +113,11 @@ function loadScript (url) {
     return (
       
       <div className="App">
-       
         <div>
           <p>Autocomplete search</p>
           <input id="pac-input" type="text"
           placeholder="Enter a location"  />
-      </div>
+       </div>
 
         <div id="map">  </div>
         <div id="infowindow-content">
@@ -140,29 +127,7 @@ function loadScript (url) {
 </div>
 
         <div id="table">
-          <Paper>
-          <Table >
-        <TableHead>
-          <TableRow>
-            <TableCell>  Name of the place Place  </TableCell>
-            <TableCell align="right">Latitude</TableCell>
-            <TableCell align="right">Longitude</TableCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {this.state.data.map(place => (
-       
-            <TableRow key={place.info.id}>
-              <TableCell component="th" scope="row">{place.info.address}   </TableCell>
-              <TableCell align="right">             {place.info.location.lat() } </TableCell>
-              <TableCell align="right">             {place.info.location.lng()}</TableCell>
-            </TableRow>
-          
-          ))}
-        </TableBody>
-        </Table>
-        </Paper>
+        
         <DatasetsTable dataset = {this.state.data}/>
           
 
@@ -171,9 +136,7 @@ function loadScript (url) {
     );
   }
   }
-  // <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzwTEDiXGiyN6KgHMgQruqPvASqVAitUU&callback=initMap"
-  //   async defer></script>
-
+  
 
   export default App;
 
