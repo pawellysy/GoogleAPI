@@ -105,6 +105,14 @@ function loadScript (url) {
       })
 
     }
+
+    deleteRow = (rowIndex) => {
+      var data = this.state.data;
+      data.splice(rowIndex, 1);
+      this.setState({data: data})
+
+
+    }
     
     
     render(){
@@ -128,7 +136,7 @@ function loadScript (url) {
 
         <div id="table">
         
-        <DatasetsTable dataset = {this.state.data}/>
+        <DatasetsTable dataset = {this.state.data} callbackFromParent={this.deleteRow}/>
           
 
         </div>        
