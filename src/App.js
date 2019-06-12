@@ -1,20 +1,8 @@
 import React from 'react';
 import './App.css';
-import { tsIndexSignature } from '@babel/types';
-import { __values } from 'tslib'
 import DatasetsTable from './components/DatasetsTable'
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing(3),
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 650,
-  },
-}));
+
 
 function loadScript (url) {
   var index = window.document.getElementsByTagName("script")[0]
@@ -117,11 +105,7 @@ function loadScript (url) {
        </div>
 
         <div id="map">  </div>
-        <div id="infowindow-content">
-  <img src="" width="16" height="16" id="place-icon"/>
-  <span id="place-name"  className="title"></span>
-  <span id="place-address"></span>
-</div>
+       
 
         <div id="table">
         

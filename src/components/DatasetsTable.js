@@ -1,20 +1,14 @@
 import React, {Component} from 'react';
-import { directive } from '@babel/types';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
 
 class DatasetsTable extends Component{
-    constructor (props){
-        super(props);
-        
-        
-    }
+    
 
     handleClick = (index) => {
       this.props.callbackFromParent(index);
