@@ -60,23 +60,13 @@ function loadScript (url) {
         map: this.map,
         position: this.state.position
       });
-
-      var infowindow = new window.google.maps.InfoWindow();
-      var infowindowContent = document.getElementById("infowindow")
-      infowindow.setContent(infowindowContent)
-      
-     
-
       
       this.autocomplete = new window.google.maps.places.Autocomplete( document.getElementById("pac-input"));
       this.autocomplete.addListener('place_changed', () => {
       var place = this.autocomplete.getPlace();
       this.places = place;
-      infowindow.close();
       this.marker.setVisible(false);
       if (!place.geometry) {
-        // User entered the name of a Place that was not suggested and
-        // pressed the Enter key, or the Place Details request failed.
         window.alert("No details available for input: '" + place.name + "'");
         return;
       }
@@ -85,12 +75,11 @@ function loadScript (url) {
         id: place.id,
         address: place.formatted_address,
         location: place.geometry.location
-        //  place.geometry.location
+        
         }
 
 
-      data.push({info});
-      console.log(info)
+      data.push({info}); 
       this.setState({data: data});
       
       // If the place has a geometry, then present it on a map.

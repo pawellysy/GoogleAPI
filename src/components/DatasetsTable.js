@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 
 class DatasetsTable extends Component{
@@ -23,14 +24,14 @@ class DatasetsTable extends Component{
     
 
     render(){
-        return(
+    return(
 
-            <div id="table">
+    <div id="table">
              
-          <Table >
+      <Table >
         <TableHead>
           <TableRow>
-            <TableCell>  Name of the place Place  </TableCell>
+            <TableCell>Name of the place Place</TableCell>
             <TableCell align="right">Latitude</TableCell>
             <TableCell align="right">Longitude</TableCell>
             <TableCell align="right">Button</TableCell>
@@ -46,18 +47,18 @@ class DatasetsTable extends Component{
               <TableCell align="right">             {place.info.location.lat() } </TableCell>
               <TableCell align="right">             {place.info.location.lng()}</TableCell>
               <TableCell>
-                <button onClick={this.handleClick}>
-                Delete
-                </button>
-                </TableCell>
+                <Button onClick={() => this.handleClick(index)} variant="outlined">
+                  Delete
+                </Button>
+              </TableCell>
             </TableRow>
           
           ))}
         </TableBody>
-        </Table>
+      </Table>
      
-            </div>
-        )
+    </div>
+    )
             
         
     }
